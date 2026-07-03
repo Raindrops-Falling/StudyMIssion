@@ -260,9 +260,9 @@ export function ComplexityChart() {
           {/* knowledge gap label (centered on the vertical line) */}
           {(() => {
             const compact = coords.width < 360;
-            const gapLabel = compact ? 'Gap' : 'Knowledge Gap';
-            const topLabel = compact ? 'With TSM' : 'Knowledge with The Study Mission';
-            const bottomLabel = compact ? 'Without TSM' : 'What School Provides (No Strategies Taught)';
+            const gapLabel = compact ? 'Knowledge Gap' : 'Knowledge Gap';
+            const topLabel = compact ? 'With Us' : 'Knowledge with The Study Mission';
+            const bottomLabel = compact ? 'Without Us' : 'What School Provides (No Strategies Taught)';
             const topMax = compact ? 120 : Math.max(100, coords.width * 0.4);
             const bottomMax = compact ? 140 : Math.max(120, coords.width * 0.45);
 

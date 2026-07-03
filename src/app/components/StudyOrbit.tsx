@@ -10,11 +10,11 @@ const SPOKE_N = 16;
 
 // ─── nodes — BASE angles (top → clockwise) ───────────────────────────────────
 const NODES = [
-  { lines: ['Spaced', 'Repetition'] },
-  { lines: ['Active', 'Recall']     },
-  { lines: ['Practice', 'Tests']    },
-  { lines: ['Note', 'Taking']       },
-  { lines: ['Deep', 'Focus']        },
+  { lines: ['Cognition', ''] },
+  { lines: ['Learning', 'Strategies']     },
+  { lines: ['Psychology', '']    },
+  { lines: ['Deep', 'Understanding']       },
+  { lines: ['Improving', 'Focus']        },
 ];
 const N = NODES.length;
 const BASE_ANGLES = NODES.map((_, i) => -Math.PI / 2 + (i * 2 * Math.PI) / N);
@@ -22,8 +22,8 @@ const BASE_ANGLES = NODES.map((_, i) => -Math.PI / 2 + (i * 2 * Math.PI) / N);
 // ─── particle factories ───────────────────────────────────────────────────────
 // Orbit particles move independently on the ring
 const makeOrbit = () =>
-  Array.from({ length: 14 }, (_, i) => ({
-    a:      (i / 14) * Math.PI * 2,
+  Array.from({ length: 2 }, (_, i) => ({
+    a:      (i / 2) * Math.PI * 2,
     spd:    0.003 + (i % 4) * 0.0004,
     r:      i % 5 === 0 ? 4.5 : i % 3 === 0 ? 3.2 : 2.4,
     accent: i % 6 === 0,

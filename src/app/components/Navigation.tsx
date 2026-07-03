@@ -1,7 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function Navigation() {
   const textColor = '#3a3830';
+  const navRef = useRef<HTMLDivElement | null>(null);
+  const [isCompact, setIsCompact] = useState(false);
+
+  useEffect(() => {
+    const update = () => {
+      const el = navRef.current;
+      if (!el) return;
+      setIsCompact(el.scrollWidth > el.clientWidth - 4);
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    if (navRef.current) observer.observe(navRef.current);
+    window.addEventListener('resize', update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, []);
 
   return (
     <nav
@@ -14,7 +33,7 @@ export function Navigation() {
         backgroundColor: '#dddbd3',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <div ref={navRef} style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
         {/* Left small link */}
         <a
           href="#"
@@ -58,7 +77,7 @@ export function Navigation() {
             <path d="M9 18h6" stroke="#e8e5de" strokeWidth="1.4" strokeLinecap="round" />
             <path d="M10 21h4" stroke="#e8e5de" strokeWidth="1.4" strokeLinecap="round" />
           </svg>
-          <span style={{ display: 'inline-block' }}>The Study Mission</span>
+          <span style={{ display: 'inline-block' }}>{isCompact ? 'Menu' : 'The Study Mission'}</span>
         </div>
 
         {/* Right small link */}

@@ -111,24 +111,45 @@ const CSS = `
 
 export function LoadingAnimation() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      gap: 32,
+      width: '100%',
+      maxWidth: 300,
+      margin: '2rem auto 0 auto' // 1. Centers the layout container and gives a safety buffer below text
+    }}>
       <style>{CSS}</style>
 
-      {/* The spinner */}
-      <div className="tsm-pl">
-        {Array.from({ length: 12 }, (_, i) => (
-          <div key={i} className="tsm-pl__dot" />
-        ))}
+      {/* 2. Added a responsive scale container wrapper.
+             It matches the natural width of the 9.5em spinner but will 
+             scale down proportionally if the screen narrows below its width. */}
+      <div style={{
+        width: '9.5em',
+        height: '9.5em',
+        maxWidth: '100%',
+        aspectRatio: '1 / 1',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        {/* The spinner */}
+        <div className="tsm-pl">
+          {Array.from({ length: 12 }, (_, i) => (
+            <div key={i} className="tsm-pl__dot" />
+          ))}
+        </div>
       </div>
 
       {/* Caption */}
       <div style={{ textAlign: 'center', maxWidth: 260 }}>
         <p style={{
-          fontFamily:    "'EB Garamond', Georgia, serif",
-          fontSize:      '1.05rem',
-          lineHeight:    1.7,
-          color:         'rgba(28,26,21,0.6)',
-          fontStyle:     'italic',
+          fontFamily:     "'EB Garamond', Georgia, serif",
+          fontSize:       '1.05rem',
+          lineHeight:     1.7,
+          color:          'rgba(28,26,21,0.6)',
+          fontStyle:      'italic',
         }}>
           Your brain is consolidating — spaced review catches it at exactly the right moment.
         </p>

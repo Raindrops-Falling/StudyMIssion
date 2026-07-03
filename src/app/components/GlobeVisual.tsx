@@ -73,8 +73,12 @@ const sampleArcs: Position[] = [
 
 export function GlobeVisual() {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[480px]">
-      <div className="relative w-full h-[20rem] sm:h-[24rem] md:h-[34rem] overflow-hidden rounded-[2rem] bg-transparent">
+    <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[480px] mx-auto mt-8">
+      {/* 1. Replaced the rigid h-[20rem] sm:h-[24rem] md:h-[34rem] with aspect-square (1:1 ratio)
+        2. Added a max-h-[400px] to prevent it from getting too tall on desktops
+        3. Added min-w-[280px] as a floor safety net so it never collapses to an unreadable spec
+      */}
+      <div className="relative w-full aspect-square max-h-[400px] min-w-[280px] overflow-hidden rounded-[2rem] bg-transparent">
         <World data={sampleArcs} globeConfig={globeConfig} />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[#dddbd3]" />
       </div>

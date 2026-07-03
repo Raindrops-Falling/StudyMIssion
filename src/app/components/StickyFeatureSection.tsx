@@ -66,8 +66,25 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
   const outerRef = useRef<HTMLDivElement>(null);
   const [active,  setActive]  = useState(0);
   const [stepKey, setStepKey] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    const mql = window.matchMedia('(min-width: 768px)');
+    const handleMediaChange = (event: MediaQueryListEvent) => setIsDesktop(event.matches);
+
+    setIsDesktop(mql.matches);
+    if ('addEventListener' in mql) {
+      mql.addEventListener('change', handleMediaChange);
+      return () => mql.removeEventListener('change', handleMediaChange);
+    }
+
+    mql.addListener(handleMediaChange);
+    return () => mql.removeListener(handleMediaChange);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+
     const update = () => {
       const el = outerRef.current;
       if (!el) return;
@@ -84,7 +101,29 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
     window.addEventListener('scroll', update, { passive: true });
     update();
     return () => window.removeEventListener('scroll', update);
-  }, [steps.length]);
+  }, [steps.length, isDesktop]);
+
+  if (!isDesktop) {
+    return (
+      <div className="space-y-10 py-10">
+        {steps.map((step, i) => (
+          <div
+            key={i}
+            className="mx-auto flex max-w-6xl flex-col gap-8 rounded-[2rem] p-6 sm:p-8"
+          >
+            <div className="space-y-5">
+              <p style={tagStyle}>{step.tag}</p>
+              <h2 style={headingStyle}>{step.heading}</h2>
+              <p style={{ ...bodyStyle, maxWidth: '100%' }}>{step.body}</p>
+            </div>
+            <div className="overflow-hidden rounded-[1.75rem] p-4 sm:p-6">
+              {step.visual}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     // Tall outer div — provides the scroll range for all screen sizes

@@ -38,15 +38,25 @@ export function RadialStudyChart() {
   }, []);
 
   return (
-    <div ref={wrapperRef} style={{ width: '100%', maxWidth: 340 }}>
-      {/* Chart */}
-      <div style={{ width: '100%', height: 220 }}>
+    <div 
+      ref={wrapperRef} 
+      style={{ 
+        width: '100%', 
+        maxWidth: 300,        
+        margin: '2rem auto 0 auto', 
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}
+    >
+      {/* Chart Container */}
+      <div style={{ width: '100%', aspectRatio: '1 / 1', maxHeight: 200 }}> 
         <ResponsiveContainer width="100%" height="100%">
           <RadialBarChart
             key={animKey}
             data={chartData}
-            innerRadius={28}
-            outerRadius={102}
+            innerRadius="20%"   
+            outerRadius="95%"   
             startAngle={90}
             endAngle={-270}
           >
@@ -60,15 +70,15 @@ export function RadialStudyChart() {
               animationDuration={1400}
               animationEasing="ease-out"
             />
-              {chartData.map((entry) => (
-                <Cell key={entry.technique} fill={entry.fill} />
-              ))}
+            {chartData.map((entry) => (
+              <Cell key={entry.technique} fill={entry.fill} />
+            ))}
           </RadialBarChart>
         </ResponsiveContainer>
       </div>
 
       {/* Legend */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 16, width: '100%' }}>
         {LEGEND.map(({ label, color }) => (
           <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: color, flexShrink: 0 }} />
@@ -79,7 +89,7 @@ export function RadialStudyChart() {
         ))}
       </div>
 
-      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(28,26,21,0.4)', marginTop: 14 }}>
+      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(28,26,21,0.4)', marginTop: 14, textAlign: 'center' }}>
         Long-term retention effectiveness (research composite)
       </p>
     </div>
